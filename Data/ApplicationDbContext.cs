@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using LotteryStatsMVCApp.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace LotteryStatsMVCApp.Data
@@ -9,5 +10,7 @@ namespace LotteryStatsMVCApp.Data
             : base(options)
         {
         }
+
+        public DbSet<DrawHistoryModel> DrawHistory { get; set; }
     }
 }
