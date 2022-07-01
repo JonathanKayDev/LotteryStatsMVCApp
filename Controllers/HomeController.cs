@@ -1,4 +1,6 @@
 ﻿using LotteryStatsMVCApp.Models;
+using LotteryStatsMVCApp.Models.Enums;
+using LotteryStatsMVCApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -15,6 +17,11 @@ namespace LotteryStatsMVCApp.Controllers
 
         public IActionResult Index()
         {
+            // test code
+            //WebConnector wc = new();
+            //List<DrawHistoryModel> history = new();
+            //history = wc.WebDrawHistory(nameof(Games.Lotto));
+
             return View();
         }
 

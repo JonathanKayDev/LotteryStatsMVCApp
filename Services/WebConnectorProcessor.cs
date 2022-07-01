@@ -1,22 +1,49 @@
-﻿using System.Net;
+﻿using LotteryStatsMVCApp.Models.Enums;
+using System.Net;
 
 namespace LotteryStatsMVCApp.Services
 {
     public static class WebConnectorProcessor
     {
         // Root path for web files
-        public static string webPath = "https://www.national-lottery.co.uk/results/";
+        private static string webPath = "https://www.national-lottery.co.uk/results/";
 
         // Web files
-        public const string EuromillionsWeb = "euromillions/draw-history/csv/";
-        public const string EuromillionsHotpicksWeb = "euromillions-hotpicks/draw-history/csv/";
-        public const string LottoWeb = "lotto/draw-history/csv/";
-        public const string LottoHotpicksWeb = "lotto-hotpicks/draw-history/csv/";
-        public const string SetforlifeWeb = "set-for-life/draw-history/csv/";
-        public const string ThunderballWeb = "thunderball/draw-history/csv/";
+        private const string EuromillionsWeb = "euromillions/draw-history/csv/";
+        private const string EuromillionsHotpicksWeb = "euromillions-hotpicks/draw-history/csv/";
+        private const string LottoWeb = "lotto/draw-history/csv/";
+        private const string LottoHotpicksWeb = "lotto-hotpicks/draw-history/csv/";
+        private const string SetforlifeWeb = "set-for-life/draw-history/csv/";
+        private const string ThunderballWeb = "thunderball/draw-history/csv/";
 
-        public static string FullWebPath(string webFile)
+        public static string FullWebPath(string game)
         {
+            string webFile = "";
+
+            switch (game)
+            {
+                case nameof(Games.Euromillions):
+                    webFile = EuromillionsWeb;
+                    break;
+                case nameof(Games.EuromillionsHotpicks):
+                    webFile = EuromillionsHotpicksWeb;
+                    break;
+                case nameof(Games.Lotto):
+                    webFile = LottoWeb;
+                    break;
+                case nameof(Games.LottoHotpicks):
+                    webFile = LottoHotpicksWeb;
+                    break;
+                case nameof(Games.SetForLife):
+                    webFile = SetforlifeWeb;
+                    break;
+                case nameof(Games.Thunderball):
+                    webFile = ThunderballWeb;
+                    break;
+                default:
+                    break;
+            }
+
             return $"{webPath}{ webFile }";
         }
 

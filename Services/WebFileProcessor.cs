@@ -26,6 +26,7 @@ namespace LotteryStatsMVCApp.Services
 
                 DrawHistoryModel d = new DrawHistoryModel();
 
+                d.GameName = game;
                 d.DrawDate = cols[0];
 
                 // loop main balls
@@ -45,7 +46,7 @@ namespace LotteryStatsMVCApp.Services
                         bonusBallCount++;
                     } 
                 }
-
+                // TODO - Add Ballset, Machine and UKMillionaireMaker
                 //d.UKMillionaireMaker = cols[8]; // TODO - capture multiple UKmillionairemaker? currently only the first is saved
                 d.DrawNumber = int.Parse(cols.Last()); // Used last since this column not always the same due to potentially multiple UKmullionairmake
 
