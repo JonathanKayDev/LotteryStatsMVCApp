@@ -13,9 +13,12 @@
         public int? MainBall6 { get; set; }
         public int? BonusBall1 { get; set; }
         public int? BonusBall2 { get; set; }
-        public string? BallSet { get; set; }
-        public string? Machine { get; set; }
         public int DrawNumber { get; set; }
-        public string? UKMillionaireMaker { get; set; }
+
+        // Future potential additional info
+
+        //public string? UKMillionaireMaker { get; set; }
+        //public string? BallSet { get; set; }
+        //public string? Machine { get; set; }
     }
 }

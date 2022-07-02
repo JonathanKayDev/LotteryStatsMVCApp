@@ -28,7 +28,6 @@ namespace LotteryStatsMVCApp.Controllers
             // get draw results from web
             WebConnector wc = new();
             List<DrawHistoryModel> webGames = wc.WebDrawHistory(game);
-
             // reverse web file so we add data in correct order
             webGames.Reverse();
 
@@ -39,22 +38,24 @@ namespace LotteryStatsMVCApp.Controllers
                                 .ToListAsync();
 
             // compare
+            int newDataCounter = 0;
             foreach (DrawHistoryModel d in webGames)
             {
-                // check if web data is stored in Db
+                // check if web data is stored in Db, if not then save
                 if (savedGames.FirstOrDefault(x => x.DrawNumber == d.DrawNumber) == null)
                 {
                     _context.Add(d);
+                    newDataCounter++;
                 }
 
             }
 
             await _context.SaveChangesAsync();
 
-            // test code
-            //WebConnector wc = new();
-            //List<DrawHistoryModel> history = new();
-            //history = wc.WebDrawHistory(nameof(Games.Lotto));
+            if (newDataCounter >= 0)
+            {
+                TempData["message"] = $"{newDataCounter} game(s) added.";
+            }
 
             return RedirectToAction("Index");
         }

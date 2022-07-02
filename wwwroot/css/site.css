@@ -16,3 +16,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+modal-content {
+    border-radius: 0.3rem;
+}

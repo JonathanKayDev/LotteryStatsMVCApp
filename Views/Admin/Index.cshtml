@@ -1,3 +1,39 @@
 ﻿@using LotteryStatsMVCApp.Models.Enums
 
 <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Euromillions)" class="btn btn-primary">Update Euromillions</a>
+<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.EuromillionsHotpicks)" class="btn btn-primary">Update Euromillions Hotpicks</a>
+<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Lotto)" class="btn btn-primary">Update Lotto</a>
+<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.LottoHotpicks)" class="btn btn-primary">Update Lotto Hotpicks</a>
+<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.SetForLife)" class="btn btn-primary">Update Set for Life</a>
+<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Thunderball)" class="btn btn-primary">Update Thunderball</a>
+
+<!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-light">
+                <div class="modal-body">
+                    <div class="row align-content-center">
+                        <p class="text-dark">@TempData["message"]</p>
+                    </div>
+                    <div class="row">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+     <!-- Add the markup needed to render the modal dialog ends here-->
+@section Scripts
+{
+    @if (TempData["message"] != null)
+     {
+        <script type='text/javascript'>
+            $(document).ready(function(){
+                $('#myModal').modal('show');
+            });
+        </script>
+     }
+} 
