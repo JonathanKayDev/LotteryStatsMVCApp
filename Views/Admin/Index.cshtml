@@ -1,11 +1,16 @@
 ﻿@using LotteryStatsMVCApp.Models.Enums
 
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Euromillions)" class="btn btn-primary">Update Euromillions</a>
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.EuromillionsHotpicks)" class="btn btn-primary">Update Euromillions Hotpicks</a>
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Lotto)" class="btn btn-primary">Update Lotto</a>
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.LottoHotpicks)" class="btn btn-primary">Update Lotto Hotpicks</a>
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.SetForLife)" class="btn btn-primary">Update Set for Life</a>
-<a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Thunderball)" class="btn btn-primary">Update Thunderball</a>
+<div class="d-grid gap-2 col-md-4 mx-auto m-4 px-2">
+    <h3>Update Results</h3>
+    <a asp-controller="Admin" asp-action="UpdateAllGames" class="btn btn-primary">All Games</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Euromillions)" class="btn btn-primary">Euromillions</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.EuromillionsHotpicks)" class="btn btn-primary">Euromillions Hotpicks</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Lotto)" class="btn btn-primary">Lotto</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.LottoHotpicks)" class="btn btn-primary">Lotto Hotpicks</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.SetForLife)" class="btn btn-primary">Set for Life</a>
+    <a asp-controller="Admin" asp-action="UpdateGame" asp-route-game="@nameof(Games.Thunderball)" class="btn btn-primary">Thunderball</a>
+</div>
+
 
 <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">

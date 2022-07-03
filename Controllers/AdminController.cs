@@ -52,9 +52,43 @@ namespace LotteryStatsMVCApp.Controllers
 
             await _context.SaveChangesAsync();
 
-            if (newDataCounter >= 0)
+            TempData["message"] = $"{newDataCounter} game(s) added.";
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> UpdateAllGames()
+        {
+            foreach (string game in Enum.GetNames(typeof(Games)))
             {
-                TempData["message"] = $"{newDataCounter} game(s) added.";
+                // get draw results from web
+                WebConnector wc = new();
+                List<DrawHistoryModel> webGames = wc.WebDrawHistory(game);
+                // reverse web file so we add data in correct order
+                webGames.Reverse();
+
+                // get draw results from Db
+                var savedGames = await _context.DrawHistory
+                                    .Where(d => d.GameName == game)
+                                    .OrderBy(d => d.DrawNumber)
+                                    .ToListAsync();
+
+                // compare
+                int newDataCounter = 0;
+                foreach (DrawHistoryModel d in webGames)
+                {
+                    // check if web data is stored in Db, if not then save
+                    if (savedGames.FirstOrDefault(x => x.DrawNumber == d.DrawNumber) == null)
+                    {
+                        _context.Add(d);
+                        newDataCounter++;
+                    }
+
+                }
+
+                TempData["message"] += $"{game}: {newDataCounter} game(s) added. \n";
+
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToAction("Index");
