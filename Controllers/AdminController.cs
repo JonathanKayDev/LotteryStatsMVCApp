@@ -68,7 +68,7 @@ namespace LotteryStatsMVCApp.Controllers
                 webGames.Reverse();
 
                 // get draw results from Db
-                var savedGames = await _context.DrawHistory
+                List<DrawHistoryModel> savedGames = await _context.DrawHistory
                                     .Where(d => d.GameName == game)
                                     .OrderBy(d => d.DrawNumber)
                                     .ToListAsync();
