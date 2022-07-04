@@ -57,98 +57,140 @@
 }
 
 <h1 class="mb-4">@pageTitle</h1>
-<hr />
+
 <!-- Common Numbers -->
-<h3 class="mt-2 mb-4 text-primary">Common Numbers</h3>
-<h5 class="text-secondary">Main Balls</h5>
-<div class="row mt-2" style="max-width: 800px">
-    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
-    {
-        <div class="col-2">
-            <div class="ball-container">
-                <img src=@ballImage style="width: 100%" class="ball-image" />
-                <div class="ball-text text-dark">@freqMainBall[i].Number.ToString()</div>
+<div class="row">
+    <div class="col col-lg-8">
+        <div class="bg-light rounded h-100 p-4">
+            <h3 class="mb-4 text-primary">Common Numbers</h3>
+            <!-- Main Balls-->
+            <h5 class="text-secondary">Main Balls</h5>
+            <div class="row mt-2" style="max-width: 600px">
+                @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                {
+                    <div class="col">
+                        <div class="ball-container">
+                            <img src=@ballImage style="width: 100%" class="ball-image" />
+                            <div class="ball-text text-dark">@freqMainBall[i].Number.ToString()</div>
+                        </div>
+                    </div>
+                }
             </div>
+            <div class="row mt-2" style="max-width: 600px; font-size:0.75rem;">
+                <p class="mb-0">Frequency:</p>
+                @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                {
+                    <div class="col text-center">@freqMainBall[i].Frequency.ToString()</div>
+                }
+            </div>
+
+            <!-- Bonus Balls Balls-->
+            @if (Model.NumberOfBonusBalls > 0)
+            {
+                <h5 class="mt-4 text-secondary">@bonusTitle</h5>
+
+                <div class="row" style="max-width: 600px">
+                    <!-- loop through number of main balls to keep col sizes the same for each row-->
+                    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                    {
+                        <div class="col ball-container">
+                            @if (i < Model.NumberOfBonusBalls)
+                            {
+                                <img src=@ballImage style="width: 100%" />
+                                <div class="ball-text text-dark">@freqBonusBall[i].Number.ToString()</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="row mt-2" style="max-width: 600px; font-size:0.75rem;">
+                    <p class="mb-0">Frequency:</p>
+                    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                    {
+                        <div class="col text-center">
+                            @if (i < Model.NumberOfBonusBalls)
+                            {
+                                @freqBonusBall[i].Frequency.ToString()
+                            }
+                        </div>
+                    }
+                </div>
+            }
         </div>
-    }
-</div>
-<div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
-    <p class="mb-0">Frequency:</p>
-    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
-    {
-        <div class="col-2 text-center">@freqMainBall[i].Frequency.ToString()</div>
-    }
+    </div>
 </div>
 
-@if (Model.NumberOfBonusBalls > 0)
-{
-    <h5 class="mt-4 text-secondary">@bonusTitle</h5>
 
-    <div class="row" style="max-width: 800px">
-        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
-        {
-            <div class="col-2 ball-container">
-                <img src=@ballImage style="width: 100%" />
-                <div class="ball-text text-dark">@freqBonusBall[i].Number.ToString()</div>
-            </div>
-        }
-    </div>
-    <div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
-        <p class="mb-0">Frequency:</p>
-        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
-        {
-            <div class="col-2 text-center">@freqBonusBall[i].Frequency.ToString()</div>
-        }
-    </div>
-}
 <!-- End of Common Numbers -->
-<hr />
 <!-- Absent Numbers -->
-<h3 class="mt-4 mb-4 text-primary">Absent Numbers</h3>
-<h5 class="text-secondary">Main Balls</h5>
-<div class="row mt-2" style="max-width: 800px">
-    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
-    {
-        <div class="col-2 ball-container">
-            <img src=@ballImage style="width: 100%" />
-            <div class="ball-text text-dark">@absentMainBall[i].Number.ToString()</div>
-        </div>
-    }
-</div>
-<div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
-    <p class="mb-0">Absence:</p>
-    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
-    {
-        <div class="col-2 text-center">@absentMainBall[i].Absence.ToString()</div>
-    }
-</div>
-
-@if (Model.NumberOfBonusBalls > 0)
-{
-    <h5 class="mt-4 text-secondary">@bonusTitle</h5>
-
-    <div class="row" style="max-width: 800px">
-        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
-        {
-            <div class="col-2 ball-container">
-                <img src=@ballImage style="width: 100%" />
-                <div class="ball-text text-dark">@absentBonusBall[i].Number.ToString()</div>
+<div class="row mt-4">
+    <div class="col col-lg-8">
+        <div class="bg-light rounded h-100 p-4">
+            <h3 class="mb-4 text-primary">Absent Numbers</h3>
+            <h5 class="text-secondary">Main Balls</h5>
+            <div class="row mt-2" style="max-width: 600px">
+                @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                {
+                    <div class="col ball-container">
+                        <img src=@ballImage style="width: 100%" />
+                        <div class="ball-text text-dark">@absentMainBall[i].Number.ToString()</div>
+                    </div>
+                }
             </div>
-        }
-    </div>
-    <div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
-        <p class="mb-0">Absence:</p>
-        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
-        {
-            <div class="col-2 text-center">@absentBonusBall[i].Absence.ToString()</div>
-        }
-    </div>
-}
-<!-- End of Absent Numbers -->
-<hr />
+            <div class="row mt-2" style="max-width: 600px; font-size:0.75rem;">
+                <p class="mb-0">Absence:</p>
+                @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                {
+                    <div class="col text-center">@absentMainBall[i].Absence.ToString()</div>
+                }
+            </div>
 
-<div class="mt-4 pt-4 mb-4 fst-italic">
+            @if (Model.NumberOfBonusBalls > 0)
+            {
+                <h5 class="mt-4 text-secondary">@bonusTitle</h5>
+
+                <div class="row" style="max-width: 600px">
+                    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                    {
+                        <div class="col ball-container">
+                            @if (i < Model.NumberOfBonusBalls)
+                            {
+                                <img src=@ballImage style="width: 100%" />
+                                <div class="ball-text text-dark">@absentBonusBall[i].Number.ToString()</div>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="row mt-2" style="max-width: 600px; font-size:0.75rem;">
+                    <p class="mb-0">Absence:</p>
+                    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+                    {
+                        <div class="col text-center">
+                            @if (i < Model.NumberOfBonusBalls)
+                            {
+                                @absentBonusBall[i].Absence.ToString()
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- End of Absent Numbers -->
+<hr class="mt-4"/>
+
+<div class="mt-2 pt-4 mb-4 fst-italic">
     <p class="mb-0">Based on the last @Model.NumberOfGames games.</p>
     <p>Last draw date: @Model.LastDrawDate</p>
 </div>
+
+
+
+
+@section Scripts
+{
+<script src="~/lib/chart/chart.min.js"></script>
+<script src="~/js/main.js"></script>
+}
 

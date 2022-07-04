@@ -39,7 +39,7 @@ modal-content {
 }
 
 .ball-text {
-    font-size: min(3vw,32px);
+    font-size: min(3vw,24px);
     font-weight:600;
     position: absolute;
     top: 50%;
