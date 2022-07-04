@@ -17,12 +17,14 @@
 
     string ballImage = "";
     string pageTitle = "";
+    string bonusTitle = "";
 
-    switch(Model.GameName)
+    switch (Model.GameName)
     {
         case nameof(Games.Euromillions):
             ballImage = "/img/LottoBall_E.svg";
             pageTitle = "Euromillions";
+            bonusTitle = "Lucky Stars";
             break;
         case nameof(Games.EuromillionsHotpicks):
             ballImage = "/img/LottoBall_EH.svg";
@@ -31,6 +33,7 @@
         case nameof(Games.Lotto):
             ballImage = "/img/LottoBall_L.svg";
             pageTitle = "Lotto";
+            bonusTitle = "Bonus Ball";
             break;
         case nameof(Games.LottoHotpicks):
             ballImage = "/img/LottoBall_LH.svg";
@@ -39,10 +42,12 @@
         case nameof(Games.SetForLife):
             ballImage = "/img/LottoBall_S.svg";
             pageTitle = "Set for Life";
+            bonusTitle = "Life Ball";
             break;
         case nameof(Games.Thunderball):
             ballImage = "/img/LottoBall_T.svg";
             pageTitle = "Thunderball";
+            bonusTitle = "Thunderball";
             break;
         default:
             ballImage = "/img/LottoBall.svg";
@@ -51,62 +56,99 @@
 
 }
 
-<h1>@pageTitle</h1>
-
-<h2>Common</h2>
-<h3>Main Balls</h3>
-<div class="row" style="max-width: 800px">
+<h1 class="mb-4">@pageTitle</h1>
+<hr />
+<!-- Common Numbers -->
+<h3 class="mt-2 mb-4 text-primary">Common Numbers</h3>
+<h5 class="text-secondary">Main Balls</h5>
+<div class="row mt-2" style="max-width: 800px">
     @for (var i = 0; i < Model.NumberOfMainBalls; i++)
     {
-        <div class="col-2 ball-container">
-            <img src=@ballImage style="width: 100%" class="ball-image"/>
-            <div class="ball-text text-dark">@freqMainBall[i].Number.ToString()</div>
+        <div class="col-2">
+            <div class="ball-container">
+                <img src=@ballImage style="width: 100%" class="ball-image" />
+                <div class="ball-text text-dark">@freqMainBall[i].Number.ToString()</div>
+            </div>
         </div>
-        //<p>frequency: @freqMainBall[0].Frequency.ToString()</p>
+    }
+</div>
+<div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
+    <p class="mb-0">Frequency:</p>
+    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+    {
+        <div class="col-2 text-center">@freqMainBall[i].Frequency.ToString()</div>
     }
 </div>
 
 @if (Model.NumberOfBonusBalls > 0)
 {
-    <h3 class="mt-4">Bonus Balls</h3>
+    <h5 class="mt-4 text-secondary">@bonusTitle</h5>
 
     <div class="row" style="max-width: 800px">
         @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
         {
             <div class="col-2 ball-container">
-                <img src=@ballImage style="width: 100%"/>
+                <img src=@ballImage style="width: 100%" />
                 <div class="ball-text text-dark">@freqBonusBall[i].Number.ToString()</div>
             </div>
-            //<p>frequency: @freqBonusBall[0].Frequency.ToString()</p>
+        }
+    </div>
+    <div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
+        <p class="mb-0">Frequency:</p>
+        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
+        {
+            <div class="col-2 text-center">@freqBonusBall[i].Frequency.ToString()</div>
         }
     </div>
 }
-
-<h2>Absent</h2>
-<h3>Main Balls</h3>
-<div class="row" style="max-width: 800px">
+<!-- End of Common Numbers -->
+<hr />
+<!-- Absent Numbers -->
+<h3 class="mt-4 mb-4 text-primary">Absent Numbers</h3>
+<h5 class="text-secondary">Main Balls</h5>
+<div class="row mt-2" style="max-width: 800px">
     @for (var i = 0; i < Model.NumberOfMainBalls; i++)
     {
         <div class="col-2 ball-container">
-            <img src=@ballImage style="width: 100%"/>
+            <img src=@ballImage style="width: 100%" />
             <div class="ball-text text-dark">@absentMainBall[i].Number.ToString()</div>
         </div>
-        //<p>frequency: @absentMainBall[0].Absence.ToString()</p>
+    }
+</div>
+<div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
+    <p class="mb-0">Absence:</p>
+    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+    {
+        <div class="col-2 text-center">@absentMainBall[i].Absence.ToString()</div>
     }
 </div>
 
 @if (Model.NumberOfBonusBalls > 0)
 {
-    <h3>Bonus Balls</h3>
+    <h5 class="mt-4 text-secondary">@bonusTitle</h5>
 
     <div class="row" style="max-width: 800px">
         @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
         {
             <div class="col-2 ball-container">
-                <img src=@ballImage style="width: 100%"/>
+                <img src=@ballImage style="width: 100%" />
                 <div class="ball-text text-dark">@absentBonusBall[i].Number.ToString()</div>
             </div>
-            //<p>absence: @absentBonusBall[0].Absence.ToString()</p>
+        }
+    </div>
+    <div class="row mt-2" style="max-width: 800px; font-size:0.75rem;">
+        <p class="mb-0">Absence:</p>
+        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
+        {
+            <div class="col-2 text-center">@absentBonusBall[i].Absence.ToString()</div>
         }
     </div>
 }
+<!-- End of Absent Numbers -->
+<hr />
+
+<div class="mt-4 pt-4 mb-4 fst-italic">
+    <p class="mb-0">Based on the last @Model.NumberOfGames games.</p>
+    <p>Last draw date: @Model.LastDrawDate</p>
+</div>
+
