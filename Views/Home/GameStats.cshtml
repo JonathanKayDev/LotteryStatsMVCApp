@@ -1,46 +1,112 @@
-﻿@model LotteryStatsMVCApp.Models.ViewModels.GameStatsViewModel
+﻿@using LotteryStatsMVCApp.Models.Enums
+@model LotteryStatsMVCApp.Models.ViewModels.GameStatsViewModel
 
 @{
     ViewData["Title"] = "Game Stats";
 
     List<BallModel> freqMainBall = Model.MainBallStats.OrderByDescending(x => x.Frequency).ToList();
-    List<BallModel> freqBonusBall = Model.BonusBallStats.OrderByDescending(x => x.Frequency).ToList();
-
     List<BallModel> absentMainBall = Model.MainBallStats.OrderByDescending(x => x.Absence).ToList();
-    List<BallModel> absentBonusBall = Model.BonusBallStats.OrderByDescending(x => x.Absence).ToList();
+    List<BallModel> freqBonusBall = new();
+    List<BallModel> absentBonusBall = new();
+
+    if (Model.NumberOfBonusBalls > 0)
+    {
+        freqBonusBall = Model.BonusBallStats.OrderByDescending(x => x.Frequency).ToList();
+        absentBonusBall = Model.BonusBallStats.OrderByDescending(x => x.Absence).ToList();
+    }
+
+    string ballImage = "";
+    string pageTitle = "";
+
+    switch(Model.GameName)
+    {
+        case nameof(Games.Euromillions):
+            ballImage = "/img/LottoBall_E.svg";
+            pageTitle = "Euromillions";
+            break;
+        case nameof(Games.EuromillionsHotpicks):
+            ballImage = "/img/LottoBall_EH.svg";
+            pageTitle = "Euromillions Hotpicks";
+            break;
+        case nameof(Games.Lotto):
+            ballImage = "/img/LottoBall_L.svg";
+            pageTitle = "Lotto";
+            break;
+        case nameof(Games.LottoHotpicks):
+            ballImage = "/img/LottoBall_LH.svg";
+            pageTitle = "Lotto Hotpicks";
+            break;
+        case nameof(Games.SetForLife):
+            ballImage = "/img/LottoBall_S.svg";
+            pageTitle = "Set for Life";
+            break;
+        case nameof(Games.Thunderball):
+            ballImage = "/img/LottoBall_T.svg";
+            pageTitle = "Thunderball";
+            break;
+        default:
+            ballImage = "/img/LottoBall.svg";
+            break;
+    }
+
 }
 
-<h1>@Model.GameName</h1>
+<h1>@pageTitle</h1>
 
 <h2>Common</h2>
 <h3>Main Balls</h3>
-<div class="row">
-    <div class="col-2 ball-container">
-        <img src="~/img/LottoBall.svg" style="width: 100%"/>
-        <div class="ball-text">@freqMainBall[0].Number.ToString()</div>
-    </div>
-    <div class="col-2">
-        <img src="~/img/LottoBall.svg" style="width: 100%"/>
-    </div>
+<div class="row" style="max-width: 800px">
+    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+    {
+        <div class="col-2 ball-container">
+            <img src=@ballImage style="width: 100%" class="ball-image"/>
+            <div class="ball-text text-dark">@freqMainBall[i].Number.ToString()</div>
+        </div>
+        //<p>frequency: @freqMainBall[0].Frequency.ToString()</p>
+    }
 </div>
-<p>@freqMainBall[0].Number.ToString() with frequency: @freqMainBall[0].Frequency.ToString()</p>
-<p>@freqMainBall[1].Number.ToString() with frequency: @freqMainBall[1].Frequency.ToString()</p>
-<p>@freqMainBall[2].Number.ToString() with frequency: @freqMainBall[2].Frequency.ToString()</p>
-<p>@freqMainBall[3].Number.ToString() with frequency: @freqMainBall[3].Frequency.ToString()</p>
-<p>@freqMainBall[4].Number.ToString() with frequency: @freqMainBall[4].Frequency.ToString()</p>
 
-<h3>Bonus Balls</h3>
-<p>@freqBonusBall[0].Number.ToString() with frequency: @freqBonusBall[0].Frequency.ToString()</p>
-<p>@freqBonusBall[1].Number.ToString() with frequency: @freqBonusBall[1].Frequency.ToString()</p>
+@if (Model.NumberOfBonusBalls > 0)
+{
+    <h3 class="mt-4">Bonus Balls</h3>
+
+    <div class="row" style="max-width: 800px">
+        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
+        {
+            <div class="col-2 ball-container">
+                <img src=@ballImage style="width: 100%"/>
+                <div class="ball-text text-dark">@freqBonusBall[i].Number.ToString()</div>
+            </div>
+            //<p>frequency: @freqBonusBall[0].Frequency.ToString()</p>
+        }
+    </div>
+}
 
 <h2>Absent</h2>
 <h3>Main Balls</h3>
-<p>@absentMainBall[0].Number.ToString() with frequency: @absentMainBall[0].Absence.ToString()</p>
-<p>@absentMainBall[1].Number.ToString() with frequency: @absentMainBall[1].Absence.ToString()</p>
-<p>@absentMainBall[2].Number.ToString() with frequency: @absentMainBall[2].Absence.ToString()</p>
-<p>@absentMainBall[3].Number.ToString() with frequency: @absentMainBall[3].Absence.ToString()</p>
-<p>@absentMainBall[4].Number.ToString() with frequency: @absentMainBall[4].Absence.ToString()</p>
+<div class="row" style="max-width: 800px">
+    @for (var i = 0; i < Model.NumberOfMainBalls; i++)
+    {
+        <div class="col-2 ball-container">
+            <img src=@ballImage style="width: 100%"/>
+            <div class="ball-text text-dark">@absentMainBall[i].Number.ToString()</div>
+        </div>
+        //<p>frequency: @absentMainBall[0].Absence.ToString()</p>
+    }
+</div>
 
-<h3>Bonus Balls</h3>
-<p>@absentBonusBall[0].Number.ToString() with frequency: @absentBonusBall[0].Absence.ToString()</p>
-<p>@absentBonusBall[1].Number.ToString() with frequency: @absentBonusBall[1].Absence.ToString()</p>
+@if (Model.NumberOfBonusBalls > 0)
+{
+    <h3>Bonus Balls</h3>
+
+    <div class="row" style="max-width: 800px">
+        @for (var i = 0; i < Model.NumberOfBonusBalls; i++)
+        {
+            <div class="col-2 ball-container">
+                <img src=@ballImage style="width: 100%"/>
+                <div class="ball-text text-dark">@absentBonusBall[i].Number.ToString()</div>
+            </div>
+            //<p>absence: @absentBonusBall[0].Absence.ToString()</p>
+        }
+    </div>
+}

@@ -44,6 +44,8 @@ namespace LotteryStatsMVCApp.Controllers
             model.GameName = game;
             model.MainBallStats = sl.CalcMainBallStats(game, savedGames);
             model.BonusBallStats = sl.CalcBonusBallStats(game, savedGames);
+            model.NumberOfMainBalls = sl.NumberOfMainBalls(game);
+            model.NumberOfBonusBalls = sl.NumberOfBonusBalls(game);
 
             return View(model);
         }
