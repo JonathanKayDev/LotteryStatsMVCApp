@@ -4,6 +4,7 @@ namespace LotteryStatsMVCApp.Services
 {
     public class ConnectionService
     {
+        #region Get Connection String
         public static string GetConnectionString(IConfiguration configuration)
         {
             //The default connection string will come from appSettings/secrets like usual
@@ -13,8 +14,10 @@ namespace LotteryStatsMVCApp.Services
             var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
-        }
+        } 
+        #endregion
 
+        #region Build Connection String
         private static string BuildConnectionString(string databaseUrl)
         {
             var databaseUri = new Uri(databaseUrl);
@@ -31,7 +34,8 @@ namespace LotteryStatsMVCApp.Services
             };
 
             return builder.ToString();
-        }
+        } 
+        #endregion
 
     }
 }

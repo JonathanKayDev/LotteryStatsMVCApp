@@ -5,6 +5,7 @@ namespace LotteryStatsMVCApp.Services
 {
     public class WebFileProcessor
     {
+        #region Convert To DrawHistoryModel
         public List<DrawHistoryModel> ConvertToDrawHistoryModel(string game, List<string> lines)
         {
             List<DrawHistoryModel> output = new();
@@ -44,7 +45,7 @@ namespace LotteryStatsMVCApp.Services
                         bonusBallNum = $"BonusBall{bonusBallCount}";
                         d.GetType().GetProperty(bonusBallNum).SetValue(d, int.Parse(cols[i])); // need to add column offset
                         bonusBallCount++;
-                    } 
+                    }
                 }
 
                 d.DrawNumber = int.Parse(cols.Last()); // Used last since this column not always the same due to potentially multiple UKmullionairmake
@@ -54,7 +55,9 @@ namespace LotteryStatsMVCApp.Services
 
             return output;
         }
+        #endregion
 
+        #region Get Number of Balls
         private int[] GetNumberOfBalls(string game)
         {
             int mbFirstCol = 0;
@@ -100,7 +103,8 @@ namespace LotteryStatsMVCApp.Services
                     break;
             }
 
-            return  new int[] {mbFirstCol, mbLastCol, bbFirstCol, bbLastCol };
-        }
+            return new int[] { mbFirstCol, mbLastCol, bbFirstCol, bbLastCol };
+        } 
+        #endregion
     }
 }

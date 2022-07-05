@@ -6,7 +6,7 @@ namespace LotteryStatsMVCApp.Services
 {
     public class WebConnector
     {
-
+        #region Properties
         // Root path for web files
         private const string webPath = "https://www.national-lottery.co.uk/results/";
 
@@ -17,7 +17,9 @@ namespace LotteryStatsMVCApp.Services
         private const string LottoHotpicksWeb = "lotto-hotpicks/draw-history/csv/";
         private const string SetforlifeWeb = "set-for-life/draw-history/csv/";
         private const string ThunderballWeb = "thunderball/draw-history/csv/";
+        #endregion
 
+        #region Web Draw History
         public List<DrawHistoryModel> WebDrawHistory(string game)
         {
             WebFileProcessor webFileProcessor = new();
@@ -25,7 +27,9 @@ namespace LotteryStatsMVCApp.Services
             List<DrawHistoryModel> output = webFileProcessor.ConvertToDrawHistoryModel(game, lines);
             return output;
         }
+        #endregion
 
+        #region Full Web Path
         private string FullWebPath(string game)
         {
             string webFile = "";
@@ -56,7 +60,9 @@ namespace LotteryStatsMVCApp.Services
 
             return $"{webPath}{ webFile }";
         }
+        #endregion
 
+        #region Load Web
         private List<string> LoadWeb(string url)
         {
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
@@ -75,8 +81,7 @@ namespace LotteryStatsMVCApp.Services
 
             return webCsv;
 
-        }
-
-
+        } 
+        #endregion
     }
 }
