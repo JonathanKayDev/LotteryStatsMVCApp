@@ -1,4 +1,5 @@
 using LotteryStatsMVCApp.Data;
+using LotteryStatsMVCApp.Models.Settings;
 using LotteryStatsMVCApp.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +13,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
+
+// register and inject IOptions of type AppSettings
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+// register SeedService
+builder.Services.AddTransient<SeedService>();
 
 var app = builder.Build();
 
@@ -41,5 +49,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+// call SeedService, this must be after setswitch of Npgsql, if any, (currently none)
+var dataService = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedService>();
+await dataService.ManageDataAsync();
 
 app.Run();

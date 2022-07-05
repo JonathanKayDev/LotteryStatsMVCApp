@@ -2,6 +2,7 @@
 using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
 using LotteryStatsMVCApp.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,11 +19,13 @@ namespace LotteryStatsMVCApp.Controllers
         }
 
         // GET: AdminController
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateGame(string game)
         {
             // get draw results from web
@@ -57,6 +60,7 @@ namespace LotteryStatsMVCApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAllGames()
         {
             foreach (string game in Enum.GetNames(typeof(Games)))
