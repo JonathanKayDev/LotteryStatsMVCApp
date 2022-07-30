@@ -2,20 +2,31 @@ using FluentAssertions;
 using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
 using LotteryStatsMVCApp.Services;
+using LotteryStatsMVCApp.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using Xunit;
 
 namespace LotteryStats.xUnitTests
 {
+    public class Startup
+    {
+        // use Xunit.DependencyInjection for dependency injection with xUnit
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddTransient<IStatsLogic, StatsLogic>();
+        }
+    }
+
     public class StatsLogicTests
     {
         // Properties
-        private readonly StatsLogic _sut; // sut means System Under Test
+        private readonly IStatsLogic _sut; // sut means System Under Test
 
         // Constructor
-        public StatsLogicTests()
+        public StatsLogicTests(IStatsLogic statsLogic)
         {
-            _sut = new StatsLogic();
+            _sut = statsLogic;
         }
 
         // Single test

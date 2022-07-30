@@ -13,6 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\lib\chart\chart.min.js" />
     <None Include="wwwroot\lib\easing\easing.js" />
     <None Include="wwwroot\lib\easing\easing.min.js" />
