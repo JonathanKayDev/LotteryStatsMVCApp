@@ -1,12 +1,15 @@
 ﻿using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
+using LotteryStatsMVCApp.Services.Interfaces;
 using System.Net;
 
 namespace LotteryStatsMVCApp.Services
 {
-    public class WebConnector
+    public class WebConnector : IWebConnector
     {
         #region Properties
+        private readonly IWebFileProcessor _webFileProcessor;
+
         // Root path for web files
         private const string webPath = "https://www.national-lottery.co.uk/results/";
 
@@ -19,12 +22,20 @@ namespace LotteryStatsMVCApp.Services
         private const string ThunderballWeb = "thunderball/draw-history/csv/";
         #endregion
 
+        #region Constructor
+        // Constructor method with dependency injection
+        public WebConnector(IWebFileProcessor webFileProcessor)
+        {
+            _webFileProcessor = webFileProcessor;
+        }
+        #endregion
+
         #region Web Draw History
         public List<DrawHistoryModel> WebDrawHistory(string game)
         {
-            WebFileProcessor webFileProcessor = new();
+            //WebFileProcessor webFileProcessor = new();
             List<string> lines = LoadWeb(FullWebPath(game));
-            List<DrawHistoryModel> output = webFileProcessor.ConvertToDrawHistoryModel(game, lines);
+            List<DrawHistoryModel> output = _webFileProcessor.ConvertToDrawHistoryModel(game, lines);
             return output;
         }
         #endregion

@@ -1,9 +1,10 @@
 ﻿using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
+using LotteryStatsMVCApp.Services.Interfaces;
 
 namespace LotteryStatsMVCApp.Services
 {
-    public class StatsLogic
+    public class StatsLogic : IStatsLogic
     {
         #region Calc Bonus Ball Stats
         public List<BallModel> CalcBonusBallStats(string game, List<DrawHistoryModel> drawHistory)

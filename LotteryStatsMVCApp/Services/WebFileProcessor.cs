@@ -1,9 +1,10 @@
 ﻿using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
+using LotteryStatsMVCApp.Services.Interfaces;
 
 namespace LotteryStatsMVCApp.Services
 {
-    public class WebFileProcessor
+    public class WebFileProcessor : IWebFileProcessor
     {
         #region Convert To DrawHistoryModel
         public List<DrawHistoryModel> ConvertToDrawHistoryModel(string game, List<string> lines)

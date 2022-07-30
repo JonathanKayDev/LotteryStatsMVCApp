@@ -3,6 +3,7 @@ using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
 using LotteryStatsMVCApp.Models.ViewModels;
 using LotteryStatsMVCApp.Services;
+using LotteryStatsMVCApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -13,11 +14,13 @@ namespace LotteryStatsMVCApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IStatsLogic _statsLogic;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, IStatsLogic statsLogic)
         {
             _logger = logger;
             _context = context;
+            _statsLogic = statsLogic;
         }
 
         public IActionResult Index()
@@ -39,13 +42,13 @@ namespace LotteryStatsMVCApp.Controllers
                                 .ToListAsync();
 
             // get stats
-            StatsLogic sl = new();
+            //StatsLogic sl = new();
             GameStatsViewModel model = new();
             model.GameName = game;
-            model.MainBallStats = sl.CalcMainBallStats(game, savedGames);
-            model.BonusBallStats = sl.CalcBonusBallStats(game, savedGames);
-            model.NumberOfMainBalls = sl.NumberOfMainBalls(game);
-            model.NumberOfBonusBalls = sl.NumberOfBonusBalls(game);
+            model.MainBallStats = _statsLogic.CalcMainBallStats(game, savedGames);
+            model.BonusBallStats = _statsLogic.CalcBonusBallStats(game, savedGames);
+            model.NumberOfMainBalls = _statsLogic.NumberOfMainBalls(game);
+            model.NumberOfBonusBalls = _statsLogic.NumberOfBonusBalls(game);
             model.NumberOfGames = savedGames.Count();
             model.LastDrawDate = savedGames.Last().DrawDate;
 

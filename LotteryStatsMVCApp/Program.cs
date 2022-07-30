@@ -1,6 +1,7 @@
 using LotteryStatsMVCApp.Data;
 using LotteryStatsMVCApp.Models.Settings;
 using LotteryStatsMVCApp.Services;
+using LotteryStatsMVCApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,11 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddControllersWithViews();
+
+// register custom services
+builder.Services.AddScoped<IWebFileProcessor, WebFileProcessor>();
+builder.Services.AddScoped<IWebConnector, WebConnector>();
+builder.Services.AddScoped<IStatsLogic, StatsLogic>();
 
 // register and inject IOptions of type AppSettings
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));

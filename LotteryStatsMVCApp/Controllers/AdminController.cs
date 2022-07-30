@@ -2,6 +2,7 @@
 using LotteryStatsMVCApp.Models;
 using LotteryStatsMVCApp.Models.Enums;
 using LotteryStatsMVCApp.Services;
+using LotteryStatsMVCApp.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace LotteryStatsMVCApp.Controllers
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebConnector _webConnector;
 
-        public AdminController(ApplicationDbContext context)
+        public AdminController(ApplicationDbContext context, IWebConnector webConnector)
         {
             _context = context;
+            _webConnector = webConnector;
         }
 
         // GET: AdminController
@@ -29,8 +32,8 @@ namespace LotteryStatsMVCApp.Controllers
         public async Task<IActionResult> UpdateGame(string game)
         {
             // get draw results from web
-            WebConnector wc = new();
-            List<DrawHistoryModel> webGames = wc.WebDrawHistory(game);
+            //WebConnector wc = new();
+            List<DrawHistoryModel> webGames = _webConnector.WebDrawHistory(game);
             // reverse web file so we add data in correct order
             webGames.Reverse();
 
@@ -66,8 +69,8 @@ namespace LotteryStatsMVCApp.Controllers
             foreach (string game in Enum.GetNames(typeof(Games)))
             {
                 // get draw results from web
-                WebConnector wc = new();
-                List<DrawHistoryModel> webGames = wc.WebDrawHistory(game);
+                //WebConnector wc = new();
+                List<DrawHistoryModel> webGames = _webConnector.WebDrawHistory(game);
                 // reverse web file so we add data in correct order
                 webGames.Reverse();
 
