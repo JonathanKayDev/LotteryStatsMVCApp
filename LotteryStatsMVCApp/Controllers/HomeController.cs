@@ -25,10 +25,6 @@ namespace LotteryStatsMVCApp.Controllers
 
         public IActionResult Index()
         {
-            // test code
-            //WebConnector wc = new();
-            //List<DrawHistoryModel> history = new();
-            //history = wc.WebDrawHistory(nameof(Games.Lotto));
 
             return View();
         }
@@ -42,7 +38,6 @@ namespace LotteryStatsMVCApp.Controllers
                                 .ToListAsync();
 
             // get stats
-            //StatsLogic sl = new();
             GameStatsViewModel model = new();
             model.GameName = game;
             model.MainBallStats = _statsLogic.CalcMainBallStats(game, savedGames);

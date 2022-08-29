@@ -28,6 +28,7 @@ builder.Services.AddScoped<IStatsLogic, StatsLogic>();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 // register SeedService
 builder.Services.AddTransient<SeedService>();
+builder.Services.AddTransient<SecretsService>();
 
 var app = builder.Build();
 

@@ -14,18 +14,21 @@ namespace LotteryStatsMVCApp.Services
         private readonly AppSettings _appSettings;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SecretsService _secretsService;
         #endregion
 
         #region Constructor
         public SeedService(UserManager<IdentityUser> userManager,
                     IOptions<AppSettings> appSettings,
                     RoleManager<IdentityRole> roleManager,
-                    ApplicationDbContext context)
+                    ApplicationDbContext context, 
+                    SecretsService secretsService)
         {
             _userManager = userManager;
             _appSettings = appSettings.Value;
             _roleManager = roleManager;
             _context = context;
+            _secretsService = secretsService;
         }
         #endregion
 
@@ -70,8 +73,8 @@ namespace LotteryStatsMVCApp.Services
 
             var newUser = new IdentityUser()
             {
-                Email = _appSettings.DefaultCredentials.Email,
-                UserName = _appSettings.DefaultCredentials.Email,
+                Email = _secretsService.GetDefaultEmail(),
+                UserName = _secretsService.GetDefaultEmail(),
                 EmailConfirmed = true
             };
 
@@ -80,7 +83,7 @@ namespace LotteryStatsMVCApp.Services
                 var user = await _userManager.FindByEmailAsync(newUser.Email);
                 if (user == null)
                 {
-                    await _userManager.CreateAsync(newUser, _appSettings.DefaultCredentials.Password);
+                    await _userManager.CreateAsync(newUser, _secretsService.GetDefaultPassword());
                     await _userManager.AddToRoleAsync(newUser, Roles.Admin.ToString());
                 }
             }
